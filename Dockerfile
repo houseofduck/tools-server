@@ -3,6 +3,7 @@ FROM node:18.18.0-alpine AS builder
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
+COPY prisma ./prisma
 
 RUN corepack enable pnpm && pnpm install --frozen-lockfile
 
