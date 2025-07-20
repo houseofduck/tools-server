@@ -463,7 +463,7 @@ export const organizationRouter = createRouter()
         preheader: `You've been invited to join ${invitation.organization.name} on Interval.`,
       })
 
-      return { didSendInvitation: didSend?.response?.Message === 'OK' ?? false }
+      return { didSendInvitation: !!didSend?.response?.data?.id }
     },
   })
   .mutation('revoke-invitation', {
