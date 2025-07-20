@@ -19,7 +19,7 @@
     "emails": "nodemon --config src/emails/nodemon.json",
     "migrate:dev": "prisma migrate dev",
     "migrate:prod": "prisma migrate deploy",
-    "build": "rm -rf dist && prisma generate && yarn server:build && yarn wss:build && yarn client:build",
+    "build": "rm -rf dist && prisma generate && pnpm server:build && pnpm wss:build && pnpm client:build",
     "pkg": "./scripts/pkg.sh",
     "pub": "./scripts/pub.sh",
     "start": "NODE_ENV=production ./dist/src/entry.js",
@@ -40,7 +40,7 @@
     "test:dev": "nodemon --watch test --exec \"playwright test\" -e ts",
     "test:start": "NODE_ENV=test start-server-and-test start:proxy http://localhost:3000/health-check/app test",
     "test:start:all": "NODE_ENV=test start-server-and-test start:proxy http://localhost:3000/health-check/app test:all",
-    "postinstall": "yarn prisma generate"
+    "postinstall": "pnpm prisma generate"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.109.0",
