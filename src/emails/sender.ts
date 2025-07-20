@@ -3,7 +3,7 @@ import handlebars from 'handlebars'
 import preview from 'preview-email'
 import fs from 'fs'
 import path from 'path'
-import { ServerClient as PostmarkClient } from 'postmark'
+import { Resend } from 'resend'
 import env from '~/env'
 import { logger } from '~/server/utils/logger'
 
@@ -79,7 +79,7 @@ interface PrepareEmailProps<T extends TemplateData> {
 }
 
 /**
- * Prepares an email to pass to a sender, such as Postmark.
+ * Prepares an email to pass to a sender, such as Resend.
  */
 async function prepareEmail<T extends TemplateData>({
   to,
@@ -148,20 +148,20 @@ export default function emailSender<T extends TemplateData>(
       logger.info(props)
     }
 
-    if (!env.POSTMARK_API_KEY) {
-      logger.info('- ⚠️ Not sending email because POSTMARK_API_KEY is not set.')
+    if (!env.RESEND_API_KEY) {
+      logger.info('- ⚠️ Not sending email because RESEND_API_KEY is not set.')
       return
     }
 
-    const postmark = new PostmarkClient(env.POSTMARK_API_KEY)
+    const resend = new Resend(env.RESEND_API_KEY)
 
     logger.info(`> Sending "${message.subject}" to ${message.to}`)
 
-    const response = await postmark.sendEmail({
-      From: message.from,
-      To: message.to,
-      Subject: message.subject,
-      HtmlBody: message.html,
+    const response = await resend.emails.send({
+      from: message.from,
+      to: message.to,
+      subject: message.subject,
+      html: message.html,
     })
 
     return { response, html: message.html }

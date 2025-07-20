@@ -20,7 +20,7 @@ const schema = z.object({
   PORT: z.string().optional().default('3000'),
 
   // emails
-  POSTMARK_API_KEY: z.string().optional(),
+  RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().optional().default('Interval <help@interval.com>'),
 
   // authentication
